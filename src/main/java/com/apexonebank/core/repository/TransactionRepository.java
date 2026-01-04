@@ -1,5 +1,7 @@
 package com.apexonebank.core.repository;
 
-public class TransactionRepository {
-    
+import com.apexonebank.core.domain.entity.Transaction;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 }
