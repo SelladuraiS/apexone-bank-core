@@ -12,6 +12,9 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, unique = true)
+    private String productName;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, unique = true)
     private ProductType productType;
@@ -39,6 +42,14 @@ public class Product {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     public ProductType getProductType() {
