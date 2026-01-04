@@ -1,31 +1,30 @@
 package com.apexonebank.core.controller;
 
 import com.apexonebank.core.domain.entity.Account;
-import com.apexonebank.core.domain.entity.Product;
-import com.apexonebank.core.repository.ProductRepository;
 import com.apexonebank.core.service.AccountService;
-import org.springframework.http.HttpStatus;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/accounts")
+@Validated
 public class AccountController {
-    
-    private final AccountService accountService;
-    private final ProductRepository productRepository;
 
-    public AccountController(AccountService accountService,ProductRepository productRepository) {
+    private final AccountService accountService;
+
+    public AccountController(AccountService accountService) {
         this.accountService = accountService;
-        this.productRepository = productRepository;
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Account openAccount(@RequestParam Long productId) {
+    @PostMapping("/open")
+    public Account openAccount(
+            @RequestParam
+            @NotNull(message = "Product ID must be provided")
+            @Positive(message = "Product ID must be positive")
+            Long productId) {
 
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new IllegalArgumentException("Product not found"));
-
-        return accountService.openAccount(product);
-    } 
+        return accountService.openAccount(productId);
+    }
 }
