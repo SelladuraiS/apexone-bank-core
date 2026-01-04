@@ -84,6 +84,14 @@ public class TransactionService {
                 .sum();
     }
 
+    public List<Transaction> getTransactions(Long accountId) {
+
+        Account account = accountRepository.findById(accountId)
+                .orElseThrow(() -> new IllegalArgumentException("Account not found"));
+
+        return transactionRepository.findByAccount(account);
+    }
+
     private Account getActiveAccount(Long accountId) {
 
         Account account = accountRepository.findById(accountId)
