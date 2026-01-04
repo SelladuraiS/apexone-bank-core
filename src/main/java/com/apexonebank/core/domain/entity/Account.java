@@ -55,4 +55,13 @@ public class Account {
     public void setProduct(Product product) {
         this.product = product;
     }
+
+    public AccountStatus getStatus() {
+        return status;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
 }
